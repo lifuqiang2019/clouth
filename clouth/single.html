@@ -60,8 +60,34 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
   	});
 </script>	
 <script src="js/simpleCart.min.js"> </script>
-</head>
-<body> 
+<style>
+		.btn-login-type{
+		background:#ff5d56;
+		padding:9px 10px;
+		font-size:0.9em;
+		color:#fff;
+		-webkit-appearance: none;
+		border: none;
+		outline: none;
+		font-family: 'Roboto Slab', serif;
+	}
+	</style>
+	<script>
+			function checkLogin() {
+				var hasUsername = JSON.parse(localStorage.getItem("username"));
+				var username = hasUsername ? hasUsername.username : "Login";
+				var register = document.getElementById('register');
+			
+				document.getElementById("login_name").innerText = username;
+			
+				if(hasUsername) {
+					register.style.display = "none";
+				}
+			}
+			
+			</script>
+	</head>
+	<body  onload="checkLogin()"> 
 <!--header-->	
 <div class=" header-product">
 	<div class="header-top com">
@@ -72,9 +98,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<li ><span ><i class="tele-in"> </i>0 462 261 61 61</span></li>			
 				</ul>
 				<ul class=" support-right">
-					<li ><a href="account.html" ><i class="men"> </i>Login</a></li>
-					<li ><a href="account.html" ><i class="tele"> </i>Create an Account</a></li>			
-				</ul>
+						<li ><a href="account.html" ><i class="men"> </i><span id="login_name">Login</span></a></li>
+						<li id="register"><a href="account.html" ><i class="tele"> </i>Create an Account</a></li>			
+					</ul>
 				<div class="clearfix"> </div>
 			</div>
 		</div>
@@ -700,15 +726,34 @@ sed diam nonummy nibh euismod</p>
 				<h3>QUICK CONTACT</h3>
 				<form>
 						
-						<input type="text" value="ENTER YOUR NAME*" onfocus="this.value='';" onblur="if (this.value == '') {this.value ='ENTER YOUR NAME*';}">
+						<input id="postusername" type="text" value="ENTER YOUR NAME*" onfocus="this.value='';" onblur="if (this.value == '') {this.value ='ENTER YOUR NAME*';}">
 						
-						<input type="text" value="ENTER YOUR EMAIL*" onfocus="this.value='';" onblur="if (this.value == '') {this.value ='ENTER YOUR EMAIL*';}">
+						<input id="postuseremail" type="text" value="ENTER YOUR EMAIL*" onfocus="this.value='';" onblur="if (this.value == '') {this.value ='ENTER YOUR EMAIL*';}">
 						
-						<input type="text" value="ENTER YOUR PHONE" onfocus="this.value='';" onblur="if (this.value == '') {this.value ='ENTER YOUR PHONE';}">
+						<input id="postuserphone" type="text" value="ENTER YOUR PHONE" onfocus="this.value='';" onblur="if (this.value == '') {this.value ='ENTER YOUR PHONE';}">
 					
-						<textarea cols="77" rows="6" value="" onfocus="this.value='';" onblur="if (this.value == '') {this.value = 'ENTER YOUR MESSAGE*';}">ENTER YOUR MESSAGE*</textarea>
+						<textarea id="postmessage" cols="77" rows="6" value="" onfocus="this.value='';" onblur="if (this.value == '') {this.value = 'ENTER YOUR MESSAGE*';}">ENTER YOUR MESSAGE*</textarea>
 						
-							<input type="submit" value="SEND MESSAGE" >
+						<input id="btn-post" class="btn-login-type" type="button" value="SEND MESSAGE" >
+						<script>
+							$("#btn-post").click(function(){
+								console.log(5555);
+								var postusername = document.getElementById('postusername').value;
+								var postuseremail = document.getElementById('postuseremail').value;
+								var postuserphone = document.getElementById('postuserphone').value;
+								var postmessage = document.getElementById('postmessage').value;
+								
+								$.post("http://localhost:8080/666/php/post.php",
+									{postusername: postusername, postuseremail: postuseremail, postuserphone: postuserphone, postmessage: postmessage},
+									function(data,status){
+										data = JSON.parse(data);
+	
+										alert(data.info);
+									}
+								);
+	
+							});
+						</script>
 						
 					</form>
 
