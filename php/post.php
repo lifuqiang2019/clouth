@@ -1,27 +1,25 @@
 <?php
 	include "./link_db.php";
 
-	if(!isset($_POST["username"])){
+	if(!isset($_POST["postusername"])){
 		return ajax_backInfo(0,[],'上传失败');  
 	}
-	$username = $_POST["username"];
-    $email = $_POST["email"];
-    $comment_theme = $_POST["comment_theme"];
-	$comment = $_POST["comment"];
-	$isnick = $_POST["isnick"];
+	$username = $_POST["postusername"];
+    $email = $_POST["postuseremail"];
+    $postuserphone = $_POST["postuserphone"];
+	$postmessage = $_POST["postmessage"];
 	$now = date('Y-m-d',time());
-    $sql="insert into {$db_1}.postmessage (username, email, comment_theme, comment, isnick, post_date)
-    values ('$username','$email','$comment_theme','$comment','$isnick','$now')";  
+    $sql="insert into postmessage (postusername, postuseremail, postuserphone, postmessage, date)
+    values ('$username','$email','$postuserphone','$postmessage','$now')";
 
 //		  echo $sql;
 //		  exit();
-	$res = mysql_query($sql) or die(mysql_error());  
+	$result = mysqli_query($conn, $sql);
 
-	if ($res){
-		ajax_backInfo(1,[],'上传成功');
-	}else{
-		ajax_backInfo(0,[],'上传失败');
+	if($result) {
+		ajax_backInfo(1,[],'提交成功');
+		
+	} else {
+		ajax_backInfo(0,[],'提交失败');
 	}
-
-
 ?>
